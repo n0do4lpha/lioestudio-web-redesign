@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTiltCards();
   initWorkSwiper();
   initServiceAccordion();
+  initTeamStack();
 });
 
 /* ═══════════════════════════════════════════
@@ -583,4 +584,185 @@ function initServiceAccordion() {
       item.classList.add('is-active');
     });
   });
+}
+
+/* ═══════════════════════════════════════════
+   TEAM VERTICAL STACK
+   ═══════════════════════════════════════════ */
+function initTeamStack() {
+  const container = document.getElementById('teamStackCards');
+  if (!container) return;
+
+  const stackOuter = document.getElementById('teamStack');
+  const cards = Array.from(container.querySelectorAll('.vertical-stack-card'));
+  const dots = Array.from(document.querySelectorAll('.vertical-stack-dot'));
+  const hint = document.querySelector('.vertical-stack-hint');
+  const counterCurrent = document.getElementById('teamStackCurrent');
+
+  let currentIndex = 0;
+  const total = cards.length;
+  let isNavigating = false;
+
+  let isDragging = false;
+  let startY = 0;
+  let currentY = 0;
+
+  function getCardStyle(index) {
+    let diff = index - currentIndex;
+    if (diff > total / 2) diff -= total;
+    if (diff < -total / 2) diff += total;
+
+    if (diff === 0) {
+      return { y: 0, scale: 1, opacity: 1, zIndex: 5, rotateX: 0 };
+    } else if (diff === -1) {
+      return { y: -160, scale: 0.82, opacity: 0.6, zIndex: 4, rotateX: 8 };
+    } else if (diff === -2) {
+      return { y: -280, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: 15 };
+    } else if (diff === 1) {
+      return { y: 160, scale: 0.82, opacity: 0.6, zIndex: 4, rotateX: -8 };
+    } else if (diff === 2) {
+      return { y: 280, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: -15 };
+    } else {
+      return { y: diff > 0 ? 400 : -400, scale: 0.6, opacity: 0, zIndex: 0, rotateX: diff > 0 ? -20 : 20 };
+    }
+  }
+
+  function updateCards() {
+    cards.forEach((card, index) => {
+      const style = getCardStyle(index);
+      card.style.transform = `translateY(${style.y}px) scale(${style.scale}) rotateX(${style.rotateX}deg)`;
+      card.style.opacity = style.opacity;
+      card.style.zIndex = style.zIndex;
+
+      if (Math.abs(style.y) >= 400 || style.opacity === 0) {
+        card.style.pointerEvents = 'none';
+      } else {
+        card.style.pointerEvents = index === currentIndex ? 'auto' : 'none';
+      }
+    });
+
+    dots.forEach((dot, index) => {
+      if (index === currentIndex) {
+        dot.classList.add('is-active');
+      } else {
+        dot.classList.remove('is-active');
+      }
+    });
+
+    if (counterCurrent) {
+      counterCurrent.textContent = String(currentIndex + 1).padStart(2, '0');
+    }
+  }
+
+  function navigate(direction) {
+    if (isNavigating) return;
+    isNavigating = true;
+    setTimeout(() => { isNavigating = false; }, 400);
+
+    if (direction > 0) {
+      currentIndex = currentIndex === total - 1 ? 0 : currentIndex + 1;
+    } else {
+      currentIndex = currentIndex === 0 ? total - 1 : currentIndex - 1;
+    }
+
+    // hide hint once user navigates
+    if (hint && hint.classList.contains('is-visible')) {
+      hint.style.animation = 'none';
+      hint.style.opacity = 0;
+    }
+
+    updateCards();
+  }
+
+  // Pointer Events for Dragging
+  container.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    startY = e.clientY;
+    container.style.cursor = 'grabbing';
+    e.preventDefault(); // Prevent text selection/native drag on img
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    currentY = e.clientY;
+  });
+
+  window.addEventListener('pointerup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    container.style.cursor = '';
+
+    const diff = currentY - startY;
+    if (Math.abs(diff) > 50) {
+      if (diff < 0) navigate(1); // drag up -> next
+      else navigate(-1); // drag down -> prev
+    }
+  });
+
+  // Touch Events for Mobile Dragging
+  container.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    currentY = e.touches[0].clientY;
+
+    // Prevent default scroll if interacting vertically on the stack area
+    const diff = Math.abs(currentY - startY);
+    if (diff > 5) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  window.addEventListener('touchend', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const diff = currentY - startY;
+    if (Math.abs(diff) > 50) {
+      if (diff < 0) navigate(1); // drag up -> next
+      else navigate(-1); // drag down -> prev
+    }
+  });
+
+  // Wheel event handling
+  let isWheeling = false;
+  stackOuter.addEventListener('wheel', (e) => {
+    // Only intercept wheel if we actually scroll items
+    if (Math.abs(e.deltaY) > 30 && !isWheeling) {
+      isWheeling = true;
+      e.preventDefault(); // prevent page scroll while interacting with stack
+      if (e.deltaY > 0) navigate(1);
+      else navigate(-1);
+      setTimeout(() => isWheeling = false, 400);
+    } else if (isWheeling) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  // Dots
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      if (currentIndex !== index) {
+        currentIndex = index;
+        updateCards();
+      }
+    });
+  });
+
+  // Show hint initially if we intersect
+  if (hint && window.IntersectionObserver) {
+    const hintObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        hint.classList.add('is-visible');
+        hintObserver.disconnect();
+      }
+    }, { threshold: 0.5 });
+    hintObserver.observe(stackOuter);
+  }
+
+  // Initialize
+  updateCards();
 }

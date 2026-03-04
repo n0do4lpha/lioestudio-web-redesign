@@ -493,52 +493,90 @@
     <!-- ═══════════════════════════════════════ -->
     <section class="team" id="equipo">
       <div class="team__inner container--wide">
-        <div class="team__header" data-animate="fade-up">
-          <h2 class="section-title">
-            <img src="/FotosLio/Equi.webp" alt="Equipo" class="section-title-img img-invert-to-black" />
-          </h2>
-          <p class="team__text standout">
-            Especializarse es sinónimo de calidad. Y por aquí tenemos la suerte
-            de contar con un equipo de valientes especialistas en su materia que
-            nos acompañan en todas las batallas creativas.
-          </p>
-        </div>
-        <div class="team__grid" data-animate="fade-up">
-          <div class="team__member" data-tilt data-tilt-rotation="8" data-tilt-reverse>
-            <div class="team__card">
-              <div class="team__spotlight"></div>
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=530&fit=crop&crop=face"
-                alt="Dirección Creativa — Al Lío Estudio" class="team__avatar-img" loading="lazy" />
+        <div class="split split--equipo" data-animate="fade-up">
+          <!-- Left side: Vertical Image Stack -->
+          <div class="split__left team-stack-wrapper">
+            <div class="vertical-stack" id="teamStack">
+              <div class="vertical-stack-glow"></div>
+
+              <div class="vertical-stack-cards" id="teamStackCards">
+                <div class="vertical-stack-card" draggable="false">
+                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=530&fit=crop&crop=face"
+                    alt="Dirección Creativa" draggable="false" />
+                  <div class="vertical-stack-card-overlay">
+                    <div class="vertical-stack-card-title">Dirección Creativa</div>
+                    <div class="vertical-stack-card-role">Estrategia & Concepto</div>
+                  </div>
+                </div>
+                <div class="vertical-stack-card" draggable="false">
+                  <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=400&h=530&fit=crop&crop=face"
+                    alt="Diseño" draggable="false" />
+                  <div class="vertical-stack-card-overlay">
+                    <div class="vertical-stack-card-title">Diseño</div>
+                    <div class="vertical-stack-card-role">Visual & Branding</div>
+                  </div>
+                </div>
+                <div class="vertical-stack-card" draggable="false">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=530&fit=crop&crop=face"
+                    alt="Producción" draggable="false" />
+                  <div class="vertical-stack-card-overlay">
+                    <div class="vertical-stack-card-title">Producción</div>
+                    <div class="vertical-stack-card-role">Vídeo & Fotografía</div>
+                  </div>
+                </div>
+                <div class="vertical-stack-card" draggable="false">
+                  <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=530&fit=crop&crop=face"
+                    alt="Digital" draggable="false" />
+                  <div class="vertical-stack-card-overlay">
+                    <div class="vertical-stack-card-title">Digital</div>
+                    <div class="vertical-stack-card-role">Redes & Marketing</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Navigation dots -->
+              <div class="vertical-stack-dots" id="teamStackDots">
+                <button class="vertical-stack-dot is-active" aria-label="Miembro 1"></button>
+                <button class="vertical-stack-dot" aria-label="Miembro 2"></button>
+                <button class="vertical-stack-dot" aria-label="Miembro 3"></button>
+                <button class="vertical-stack-dot" aria-label="Miembro 4"></button>
+              </div>
+
+              <!-- Instruction hint -->
+              <div class="vertical-stack-hint">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="hint-icon-up" stroke="currentColor"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12l7-7 7 7" />
+                </svg>
+                <span class="hint-text">Deslizar</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="hint-icon-down" stroke="currentColor"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M19 12l-7 7-7-7" />
+                </svg>
+              </div>
+
+              <!-- Counter -->
+              <div class="vertical-stack-counter">
+                <span class="counter-current" id="teamStackCurrent">01</span>
+                <div class="counter-divider"></div>
+                <span class="counter-total">04</span>
+              </div>
             </div>
-            <h4 class="team__name">Dirección Creativa</h4>
-            <p class="team__role">Estrategia & Concepto</p>
           </div>
-          <div class="team__member" data-tilt data-tilt-rotation="8" data-tilt-reverse>
-            <div class="team__card">
-              <div class="team__spotlight"></div>
-              <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=400&h=530&fit=crop&crop=face"
-                alt="Diseño — Al Lío Estudio" class="team__avatar-img" loading="lazy" />
+
+          <!-- Right side: Title and Text -->
+          <div class="split__right team-text-wrapper">
+            <div class="team__header team__header--left">
+              <h2 class="section-title">
+                <img src="/FotosLio/Equi.webp" alt="Equipo"
+                  class="section-title-img img-invert-to-black section-title-img--equipo" />
+              </h2>
+              <p class="team__text standout">
+                Especializarse es sinónimo de calidad. Y por aquí tenemos la suerte
+                de contar con un equipo de valientes especialistas en su materia que
+                nos acompañan en todas las batallas creativas.
+              </p>
             </div>
-            <h4 class="team__name">Diseño</h4>
-            <p class="team__role">Visual & Branding</p>
-          </div>
-          <div class="team__member" data-tilt data-tilt-rotation="8" data-tilt-reverse>
-            <div class="team__card">
-              <div class="team__spotlight"></div>
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=530&fit=crop&crop=face"
-                alt="Producción — Al Lío Estudio" class="team__avatar-img" loading="lazy" />
-            </div>
-            <h4 class="team__name">Producción</h4>
-            <p class="team__role">Vídeo & Fotografía</p>
-          </div>
-          <div class="team__member" data-tilt data-tilt-rotation="8" data-tilt-reverse>
-            <div class="team__card">
-              <div class="team__spotlight"></div>
-              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=530&fit=crop&crop=face"
-                alt="Digital — Al Lío Estudio" class="team__avatar-img" loading="lazy" />
-            </div>
-            <h4 class="team__name">Digital</h4>
-            <p class="team__role">Redes & Marketing</p>
           </div>
         </div>
       </div>
