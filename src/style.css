@@ -145,6 +145,14 @@ h5 {
   filter: brightness(0);
 }
 
+.services__title .section-title-img,
+.team__header .section-title-img {
+  height: 3.25em;
+  /* Much larger than default */
+  margin: 0 auto;
+  /* Properly center block elements */
+}
+
 /* ─── SPLIT LAYOUT (1/3 + 2/3, ala Studio Llama) ─── */
 .split {
   display: flex;
