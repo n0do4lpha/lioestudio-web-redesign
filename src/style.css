@@ -659,9 +659,13 @@ h5 {
   }
 
   .accordion__item.is-active .accordion__label {
-    bottom: 90px;
+    bottom: 54px;
     left: 20px;
     font-size: 1.15rem;
+  }
+
+  .accordion__item.is-active.is-publicidad .accordion__label {
+    bottom: 90px;
   }
 
   .accordion__desc {
