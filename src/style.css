@@ -420,10 +420,10 @@ h5 {
   background-image: url("/FotosLio/Recurso-5.webp");
   background-position: center;
   background-repeat: no-repeat;
-  /* background-size will be animated via JS from 130% to 100% */
-  background-size: 130%;
+  /* background-size will be animated via JS from 115% to 100% */
+  background-size: 115%;
   /* clip-path will be animated via JS */
-  clip-path: polygon(30% 30%, 70% 30%, 70% 70%, 30% 70%);
+  clip-path: polygon(38% 38%, 62% 38%, 62% 62%, 38% 62%);
   will-change: clip-path, background-size, opacity;
   z-index: 10;
 }
