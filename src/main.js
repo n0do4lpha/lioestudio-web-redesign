@@ -120,16 +120,101 @@ function initScrollAnimations() {
 }
 
 /* ═══════════════════════════════════════════
-   HERO ANIMATION (3D perspective entrance)
+   HERO ANIMATION (Modern Parallax)
    ═══════════════════════════════════════════ */
 function initHeroAnimation() {
-  const claim = document.querySelector('[data-animate="hero"]');
-  if (!claim) return;
+  const heroSection = document.getElementById('hero');
+  if (!heroSection) return;
 
-  // Delay for dramatic effect
-  setTimeout(() => {
-    claim.classList.add('visible');
-  }, 300);
+  const centerArea = document.getElementById('heroCenterImg');
+  const claim = document.getElementById('heroClaim');
+  const parallaxWrappers = document.querySelectorAll('.parallax-wrapper');
+
+  const SECTION_HEIGHT = 1500;
+
+  // Initial dramatic fade-in for claim
+  if (claim) {
+    setTimeout(() => {
+      claim.classList.add('visible');
+    }, 300);
+  }
+
+  // Optimize scroll tracking using requestAnimationFrame to prevent jank
+  let isTicking = false;
+
+  const updateHeroScroll = () => {
+    isTicking = false;
+    const scrollY = window.scrollY;
+
+    // 1. Center Area Clip-path, Size and Opacity
+    let progress = Math.min(Math.max(scrollY / SECTION_HEIGHT, 0), 1);
+
+    let clip1 = 25 - (25 * progress); // 25 to 0
+    let clip2 = 75 + (25 * progress); // 75 to 100
+
+    // Zoom background 170 to 100 smoothly
+    let bgProgress = Math.min(Math.max(scrollY / (SECTION_HEIGHT + 500), 0), 1);
+    let bgSize = 170 - (70 * bgProgress);
+
+    if (centerArea) {
+      centerArea.style.clipPath = `polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
+      centerArea.style.backgroundSize = `${bgSize}%`;
+
+      // Fade out after main section
+      let opacityProgress = Math.min(Math.max((scrollY - SECTION_HEIGHT) / 500, 0), 1);
+      centerArea.style.opacity = 1 - opacityProgress;
+    }
+
+    if (claim) {
+      // Fade out claim text quickly upon scrolling
+      let claimOpacity = Math.min(Math.max(scrollY / 400, 0), 1);
+      claim.style.opacity = 1 - claimOpacity;
+    }
+
+    // 2. Parallax Foreground Images
+    parallaxWrappers.forEach(wrapper => {
+      const img = wrapper.querySelector('.parallax-img');
+      if (!img) return;
+
+      const rect = wrapper.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      const totalScrollDistance = windowHeight + rect.height;
+      const currentScroll = windowHeight - rect.top;
+
+      // Calculate individual scroll percentage
+      let imgProgress = currentScroll / totalScrollDistance;
+      imgProgress = Math.min(Math.max(imgProgress, 0), 1);
+
+      const start = parseFloat(wrapper.getAttribute('data-start') || 0);
+      const end = parseFloat(wrapper.getAttribute('data-end') || 0);
+
+      // Calculate Y translate
+      const yStr = start + ((end - start) * imgProgress);
+
+      // Late scale/opacity fade out at 75% scroll bounds
+      let imgScale = 1;
+      let imgOpacity = 1;
+      if (imgProgress > 0.75) {
+        const remainingProgress = (imgProgress - 0.75) / 0.25;
+        imgScale = 1 - (0.15 * remainingProgress);
+        imgOpacity = 1 - remainingProgress;
+      }
+
+      img.style.transform = `translateY(${yStr}px) scale(${imgScale})`;
+      img.style.opacity = imgOpacity;
+    });
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(updateHeroScroll);
+      isTicking = true;
+    }
+  });
+
+  // Trigger once on load
+  updateHeroScroll();
 }
 
 /* ═══════════════════════════════════════════

@@ -395,15 +395,46 @@ h5 {
 /* ═══════════════════════════════════════════════════════════════
    HERO
    ═══════════════════════════════════════════════════════════════ */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding-top: var(--header-h);
+.modern-hero {
+  position: relative;
+  width: 100%;
+  height: calc(1500px + 100vh);
+  background-color: var(--c-bg);
+  /* Mantiene el color base del sitio */
 }
 
-.hero__inner {
-  padding: var(--space-xl) 0;
+.modern-hero__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.modern-hero__center-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/FotosLio/N1.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-size will be animated via JS from 170% to 100% */
+  background-size: 170%;
+  /* clip-path will be animated via JS */
+  clip-path: polygon(25% 25%, 75% 25%, 75% 75%, 25% 75%);
+  will-change: clip-path, background-size, opacity;
+  z-index: 10;
+}
+
+.modern-hero__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  z-index: 20;
+  pointer-events: none;
 }
 
 .hero__claim {
@@ -411,24 +442,94 @@ h5 {
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.05;
-  color: var(--c-text);
+  color: #ffffff;
+  /* Contrast over the dark image background */
   max-width: 900px;
-
-  /* Initial animation state */
   opacity: 0;
+  /* Animated in via JS */
   transform: perspective(600px) translate3d(30px, 15px, 0) rotateX(10deg) rotateY(3deg);
-  transition: opacity 1.2s var(--ease-out),
-    transform 1.2s var(--ease-out);
+  will-change: opacity, transform;
 }
 
 .hero__claim.visible {
   opacity: 1;
   transform: perspective(600px) translate3d(0, 0, 0) rotateX(0) rotateY(0);
+  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
 }
 
 .hero__claim em {
   font-style: italic;
   color: var(--c-accent);
+}
+
+/* ─── Parallax Layout ─── */
+.modern-hero__parallax {
+  position: absolute;
+  top: 100vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding-top: 100px;
+  z-index: 30;
+  pointer-events: none;
+  /* Allows scrolling */
+  display: flex;
+  flex-direction: column;
+}
+
+.parallax-wrapper {
+  position: relative;
+  will-change: transform, opacity;
+}
+
+.parallax-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  display: block;
+}
+
+/* Specific sizing and margin for the floating images similar to the reference */
+.img-1 {
+  width: 33.33%;
+  margin-top: 5vh;
+}
+
+.img-2 {
+  width: 66.66%;
+  margin: 15vh auto 0;
+}
+
+.img-3 {
+  width: 33.33%;
+  margin: 0 0 0 auto;
+  margin-top: -10vh;
+}
+
+.img-4 {
+  width: 41.66%;
+  margin: 15vh 0 0 8rem;
+}
+
+@media (max-width: 768px) {
+  .img-1 {
+    width: 60%;
+  }
+
+  .img-2 {
+    width: 90%;
+  }
+
+  .img-3 {
+    width: 60%;
+    margin-top: 5vh;
+  }
+
+  .img-4 {
+    width: 70%;
+    margin: 5vh 0 0 2rem;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
