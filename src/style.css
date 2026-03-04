@@ -428,38 +428,79 @@ h5 {
   z-index: 10;
 }
 
-.modern-hero__content {
+.modern-hero__text-overlay {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  text-align: center;
   z-index: 20;
   pointer-events: none;
-}
-
-.hero__claim {
-  font-size: var(--fs-hero);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  color: #ffffff;
-  /* Contrast over the dark image background */
-  max-width: 900px;
-  opacity: 0;
-  /* Animated in via JS */
-  transform: perspective(600px) translate3d(30px, 15px, 0) rotateX(10deg) rotateY(3deg);
+  padding: 0 1rem;
   will-change: opacity, transform;
 }
 
-.hero__claim.visible {
-  opacity: 1;
-  transform: perspective(600px) translate3d(0, 0, 0) rotateX(0) rotateY(0);
-  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+.hero-quote {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 400;
+  color: var(--c-text);
+  line-height: 1.2;
+  margin-top: -5vh;
+  /* slightly above the exact center */
+  max-width: 900px;
+  letter-spacing: -0.02em;
 }
 
-.hero__claim em {
-  font-style: italic;
-  color: var(--c-accent);
+.hero-quote strong {
+  font-weight: 800;
+  display: block;
+  margin-top: 0.2em;
+}
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 8vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--c-text);
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 50px;
+  background-color: var(--c-text);
+  animation: scrollDown 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  transform-origin: top;
+}
+
+@keyframes scrollDown {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+
+  50.1% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
 }
 
 /* ─── Parallax Layout ─── */

@@ -127,15 +127,17 @@ function initHeroAnimation() {
   if (!heroSection) return;
 
   const centerArea = document.getElementById('heroCenterImg');
-  const claim = document.getElementById('heroClaim');
+  const overlay = document.getElementById('heroOverlay');
   const parallaxWrappers = document.querySelectorAll('.parallax-wrapper');
 
   const SECTION_HEIGHT = 1500;
 
-  // Initial dramatic fade-in for claim
-  if (claim) {
+  // Initial dramatic fade-in for overlay
+  if (overlay) {
+    overlay.style.opacity = 0;
     setTimeout(() => {
-      claim.classList.add('visible');
+      overlay.style.transition = 'opacity 1.5s ease-out';
+      overlay.style.opacity = 1;
     }, 300);
   }
 
@@ -165,10 +167,16 @@ function initHeroAnimation() {
       centerArea.style.opacity = 1 - opacityProgress;
     }
 
-    if (claim) {
-      // Fade out claim text quickly upon scrolling
-      let claimOpacity = Math.min(Math.max(scrollY / 400, 0), 1);
-      claim.style.opacity = 1 - claimOpacity;
+    if (overlay) {
+      // Fade out overlay text/indicator quickly upon scrolling
+      let overlayOpacity = Math.min(Math.max(scrollY / 300, 0), 1);
+      overlay.style.transform = `translateY(-${Math.min(scrollY / 3, 50)}px)`;
+      if (scrollY === 0) {
+        overlay.style.opacity = 1; // Handled by CSS transition initially
+      } else {
+        overlay.style.transition = 'none'; // remove transition for smooth scroll behavior
+        overlay.style.opacity = 1 - overlayOpacity;
+      }
     }
 
     // 2. Parallax Foreground Images
