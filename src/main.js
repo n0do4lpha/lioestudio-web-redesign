@@ -149,12 +149,12 @@ function initHeroAnimation() {
     // 1. Center Area Clip-path, Size and Opacity
     let progress = Math.min(Math.max(scrollY / SECTION_HEIGHT, 0), 1);
 
-    let clip1 = 48 - (48 * progress); // 48 to 0
-    let clip2 = 52 + (48 * progress); // 52 to 100
+    let clip1 = 49.5 - (49.5 * progress); // 49.5 to 0
+    let clip2 = 50.5 + (49.5 * progress); // 50.5 to 100
 
-    // Zoom background smoothly from 102 to 100
+    // Zoom background smoothly from 101 to 100
     let bgProgress = Math.min(Math.max(scrollY / (SECTION_HEIGHT + 500), 0), 1);
-    let bgSize = 102 - (2 * bgProgress);
+    let bgSize = 101 - (1 * bgProgress);
 
     if (centerArea) {
       centerArea.style.clipPath = `polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
