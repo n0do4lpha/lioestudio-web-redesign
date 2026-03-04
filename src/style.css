@@ -1142,7 +1142,7 @@ h5 {
   flex-direction: column;
   justify-content: center;
   flex: 1;
-  padding-left: var(--space-md);
+  padding-right: var(--space-md);
 }
 
 .team-text-wrapper {
@@ -1404,7 +1404,8 @@ h5 {
   }
 
   .team-split__right {
-    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: var(--space-xl);
   }
 
   .vertical-stack {
