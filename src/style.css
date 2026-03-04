@@ -1113,7 +1113,7 @@ h5 {
    TEAM — with Tilt + Spotlight effect
    ═══════════════════════════════════════════════════════════════ */
 .team {
-  padding: var(--space-lg) 0 var(--space-xl);
+  padding: clamp(12rem, 25vh, 16rem) 0 clamp(14rem, 30vh, 20rem);
 }
 
 .team__header {
@@ -1129,6 +1129,7 @@ h5 {
 /* ─── TEAM VERTICAL IMAGE STACK ─── */
 .split--equipo {
   align-items: center;
+  gap: var(--space-md);
 }
 
 .team-split__left {
@@ -1142,7 +1143,6 @@ h5 {
   flex-direction: column;
   justify-content: center;
   flex: 1;
-  padding-right: var(--space-md);
 }
 
 .team-text-wrapper {
@@ -1165,7 +1165,7 @@ h5 {
 .vertical-stack {
   position: relative;
   display: flex;
-  height: 600px;
+  height: 800px;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -1409,7 +1409,7 @@ h5 {
   }
 
   .vertical-stack {
-    height: 500px;
+    height: 650px;
     justify-content: center;
   }
 
