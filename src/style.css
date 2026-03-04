@@ -1095,6 +1095,10 @@ h5 {
   filter: grayscale(0%) opacity(1);
 }
 
+.clients__img--small {
+  height: clamp(24px, 3vw, 42px);
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0);
