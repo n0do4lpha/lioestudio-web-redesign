@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   assignStaggerDelays();
   initTiltCards();
+  initWorkSwiper();
 });
 
 /* ═══════════════════════════════════════════
@@ -351,3 +352,109 @@ function initTiltCards() {
   });
 }
 
+
+/* ═══════════════════════════════════════════
+   WORK SWIPER — Mobile card stack
+   ═══════════════════════════════════════════ */
+function initWorkSwiper() {
+  const stack = document.getElementById('workSwiperStack');
+  if (!stack) return;
+
+  let isSwiping = false;
+  let startX = 0;
+  let currentX = 0;
+  let rafId = null;
+
+  const THRESHOLD = 50;
+  const SWAP_DURATION = 300;
+
+  function getCards() {
+    return [...stack.querySelectorAll('.swiper-card')];
+  }
+
+  function updatePositions() {
+    const cards = getCards();
+    const total = cards.length;
+    cards.forEach((card, i) => {
+      card.style.setProperty('--i', (i + 1).toString());
+      card.style.setProperty('--swipe-x', '0px');
+      card.style.setProperty('--swipe-rotate', '0deg');
+      card.style.opacity = '1';
+      card.style.zIndex = total - i;
+      card.style.transition = `transform ${SWAP_DURATION}ms ease, opacity ${SWAP_DURATION}ms ease`;
+    });
+  }
+
+  function applySwipeStyles(deltaX) {
+    const card = getCards()[0];
+    if (!card) return;
+    card.style.setProperty('--swipe-x', `${deltaX}px`);
+    card.style.setProperty('--swipe-rotate', `${deltaX * 0.2}deg`);
+    card.style.opacity = (1 - Math.min(Math.abs(deltaX) / 100, 1) * 0.75).toString();
+  }
+
+  function handleStart(clientX) {
+    if (isSwiping) return;
+    isSwiping = true;
+    startX = clientX;
+    currentX = clientX;
+    const card = getCards()[0];
+    if (card) card.style.transition = 'none';
+  }
+
+  function handleEnd() {
+    if (!isSwiping) return;
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+
+    const deltaX = currentX - startX;
+    const card = getCards()[0];
+
+    if (card) {
+      card.style.transition = `transform ${SWAP_DURATION}ms ease, opacity ${SWAP_DURATION}ms ease`;
+
+      if (Math.abs(deltaX) > THRESHOLD) {
+        const dir = Math.sign(deltaX);
+        card.style.setProperty('--swipe-x', `${dir * 300}px`);
+        card.style.setProperty('--swipe-rotate', `${dir * 20}deg`);
+        card.style.opacity = '0.2';
+
+        setTimeout(() => {
+          stack.appendChild(card);
+          updatePositions();
+        }, SWAP_DURATION);
+      } else {
+        applySwipeStyles(0);
+      }
+    }
+
+    isSwiping = false;
+    startX = 0;
+    currentX = 0;
+  }
+
+  function handleMove(clientX) {
+    if (!isSwiping) return;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      currentX = clientX;
+      const deltaX = currentX - startX;
+      applySwipeStyles(deltaX);
+
+      if (Math.abs(deltaX) > THRESHOLD) {
+        handleEnd();
+      }
+    });
+  }
+
+  stack.addEventListener('pointerdown', (e) => handleStart(e.clientX));
+  stack.addEventListener('pointermove', (e) => handleMove(e.clientX));
+  stack.addEventListener('pointerup', () => handleEnd());
+  stack.addEventListener('pointerleave', () => {
+    if (isSwiping) handleEnd();
+  });
+
+  updatePositions();
+}

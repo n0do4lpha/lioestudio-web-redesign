@@ -621,6 +621,136 @@ h5 {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   WORK SWIPER — Mobile-only card stack (≤768px)
+   ═══════════════════════════════════════════════════════════════ */
+.work-swiper {
+  display: none;
+  /* Hidden on desktop */
+}
+
+.work-swiper__title {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.work-swiper__stack {
+  --card-perspective: 700px;
+  --card-z-offset: 12px;
+  --card-y-offset: 7px;
+  --card-swap-duration: 0.3s;
+
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  /* Approximate height: card height + stack offsets */
+  height: 420px;
+  touch-action: none;
+  transform-style: preserve-3d;
+  user-select: none;
+}
+
+.swiper-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--c-white);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  cursor: grab;
+  will-change: transform, opacity;
+  /* 3D stack transform — set by JS via --i, --swipe-x, --swipe-rotate */
+  transform:
+    perspective(var(--card-perspective)) translateZ(calc(-1 * var(--card-z-offset) * var(--i, 1))) translateY(calc(var(--card-y-offset) * var(--i, 1))) translateX(var(--swipe-x, 0px)) rotateY(var(--swipe-rotate, 0deg));
+  transition: transform var(--card-swap-duration) ease,
+    opacity var(--card-swap-duration) ease;
+}
+
+.swiper-card:active {
+  cursor: grabbing;
+}
+
+/* Color blocks — reuse the same palette */
+.swiper-card__color {
+  padding: var(--space-lg) var(--space-md);
+  display: flex;
+  align-items: flex-end;
+}
+
+.swiper-card__color--camel {
+  background: var(--c-card-camel);
+}
+
+.swiper-card__color--warm {
+  background: var(--c-card-warm);
+}
+
+.swiper-card__color--stone {
+  background: var(--c-card-stone);
+}
+
+.swiper-card__color--deep {
+  background: var(--c-card-deep);
+}
+
+.swiper-card__color--rose {
+  background: var(--c-card-rose);
+}
+
+.swiper-card__client {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--c-white);
+}
+
+.swiper-card__body {
+  padding: var(--space-md);
+}
+
+.swiper-card__title {
+  font-size: var(--fs-h4, 1.1rem);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.01em;
+}
+
+.swiper-card__desc {
+  color: var(--c-text-light);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.swiper-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.work-swiper__hint {
+  text-align: center;
+  font-size: var(--fs-tag);
+  color: var(--c-text-muted);
+  margin-top: var(--space-md);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* ─── Responsive: Show swiper / hide desktop on mobile ─── */
+@media (max-width: 768px) {
+  .work .split {
+    display: none !important;
+  }
+
+  .work-swiper {
+    display: block;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
    CLIENTS MARQUEE
    ═══════════════════════════════════════════════════════════════ */
 .clients {
