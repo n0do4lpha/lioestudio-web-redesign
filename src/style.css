@@ -1113,7 +1113,7 @@ h5 {
    TEAM — with Tilt + Spotlight effect
    ═══════════════════════════════════════════════════════════════ */
 .team {
-  padding: clamp(6rem, 12vh, 8rem) 0 clamp(8rem, 15vh, 12rem);
+  padding: var(--space-xl) 0;
 }
 
 .team__header {
@@ -1143,7 +1143,7 @@ h5 {
   flex-direction: column;
   justify-content: center;
   flex: 1;
-  padding-right: var(--space-lg);
+  padding-right: var(--space-md);
 }
 
 .team-text-wrapper {
