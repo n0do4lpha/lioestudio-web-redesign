@@ -641,11 +641,13 @@ h5 {
   .accordion__item {
     width: 100% !important;
     min-width: unset;
+    flex: none;
     height: 70px;
     transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .accordion__item.is-active {
+    flex: none;
     height: 280px;
   }
 
