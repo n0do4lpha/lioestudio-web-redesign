@@ -1133,8 +1133,8 @@ h5 {
 
 .team-split__left {
   position: relative;
-  flex: 0 0 380px;
-  max-width: 400px;
+  flex: 0 0 460px;
+  max-width: 480px;
 }
 
 .team-split__right {
@@ -1157,7 +1157,7 @@ h5 {
 
 .section-title-img--equipo {
   margin-left: 0 !important;
-  max-width: 100% !important;
+  max-width: 480px !important;
   width: 100% !important;
   height: auto !important;
 }
@@ -1168,8 +1168,9 @@ h5 {
   height: 600px;
   width: 100%;
   align-items: center;
-  justify-content: flex-start;
-  overflow: hidden;
+  justify-content: center;
+  overflow: visible;
+  /* ensure counter is not clipped if slightly out */
   background: transparent;
 }
 
@@ -1252,7 +1253,7 @@ h5 {
 /* Dots */
 .vertical-stack-dots {
   position: absolute;
-  right: 2rem;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -1354,7 +1355,7 @@ h5 {
 /* Counter */
 .vertical-stack-counter {
   position: absolute;
-  left: 2rem;
+  left: 0;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -1388,15 +1389,24 @@ h5 {
   }
 
   .vertical-stack-dots {
-    right: 1rem;
+    right: 0;
   }
 
   .vertical-stack-counter {
-    left: 1rem;
+    left: 0;
   }
 }
 
 @media (max-width: 768px) {
+  .team-split__left {
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .team-split__right {
+    padding-left: 0;
+  }
+
   .vertical-stack {
     height: 500px;
     justify-content: center;
