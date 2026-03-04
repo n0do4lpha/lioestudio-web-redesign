@@ -334,18 +334,18 @@ function initTiltCards() {
     card.addEventListener('mousemove', (e) => handlePointerMove(e.clientX, e.clientY));
     card.addEventListener('mouseleave', handlePointerLeave);
 
-    // Touch handlers
+    // Touch handlers — non-passive so we can preventDefault and block scroll
     card.addEventListener('touchstart', (e) => {
-      // Prevent scrolling while interacting with the card if needed
-      // e.preventDefault(); 
+      e.preventDefault();
       const touch = e.touches[0];
       handlePointerMove(touch.clientX, touch.clientY);
-    }, { passive: true });
+    }, { passive: false });
 
     card.addEventListener('touchmove', (e) => {
+      e.preventDefault();
       const touch = e.touches[0];
       handlePointerMove(touch.clientX, touch.clientY);
-    }, { passive: true });
+    }, { passive: false });
 
     card.addEventListener('touchend', handlePointerLeave);
   });
