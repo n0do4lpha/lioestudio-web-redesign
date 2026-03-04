@@ -74,8 +74,6 @@ html {
   scroll-padding-top: var(--header-h);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  width: 100%;
 }
 
 body {
@@ -86,7 +84,6 @@ body {
   color: var(--c-text);
   background: var(--c-bg);
   overflow-x: hidden;
-  width: 100%;
 }
 
 img {
@@ -586,6 +583,19 @@ h5 {
     width: 70%;
     margin: 5vh 0 0 2rem;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PREVENT MOBILE HORIZONTAL SCROLL FOR SECTIONS
+   ═══════════════════════════════════════════════════════════════ */
+.about,
+.services,
+.work,
+.clients,
+.contact,
+.footer {
+  overflow-x: clip;
+  /* Fix iOS sticky bug while preventing x-scroll */
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1158,6 +1168,8 @@ h5 {
    ═══════════════════════════════════════════════════════════════ */
 .team {
   padding: var(--space-xl) 0;
+  overflow-x: clip;
+  /* Clip horizontal overflow from the glow without breaking layout */
 }
 
 .team__header {
