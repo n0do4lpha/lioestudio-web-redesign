@@ -534,6 +534,11 @@ h5 {
   margin-top: var(--space-xl);
 }
 
+.services__title {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
 .accordion__row {
   display: flex;
   align-items: center;
@@ -546,21 +551,22 @@ h5 {
 .accordion__item {
   position: relative;
   height: 100%;
-  min-width: 60px;
-  width: 60px;
+  min-width: 46px;
+  width: 46px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   cursor: pointer;
-  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    flex 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   background-size: cover;
   background-position: center;
   background-color: var(--c-bg-dark);
-  flex-shrink: 0;
+  flex: 0 0 46px;
 }
 
 .accordion__item.is-active {
-  width: 400px;
-  flex-shrink: 1;
+  flex: 1 0 0;
+  width: auto;
 }
 
 /* Dark overlay */
