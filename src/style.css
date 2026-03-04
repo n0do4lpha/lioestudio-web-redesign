@@ -1462,11 +1462,11 @@ h5 {
 
   .team-split__right {
     padding-right: 0;
-    padding-bottom: var(--space-sm);
+    padding-bottom: var(--space-md);
   }
 
   .vertical-stack {
-    height: 520px;
+    height: 550px;
     justify-content: center;
   }
 
