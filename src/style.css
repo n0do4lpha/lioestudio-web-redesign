@@ -690,7 +690,16 @@ h5 {
 
 .services__title {
   text-align: center;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.services__tagline {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto var(--space-xl);
+  color: var(--c-text-light);
+  font-size: var(--fs-body);
+  line-height: 1.7;
 }
 
 .accordion__row {
