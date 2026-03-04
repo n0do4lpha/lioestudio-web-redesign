@@ -170,7 +170,8 @@ h5 {
 
 .split__left--sticky {
   position: sticky;
-  top: calc(var(--header-h) + var(--space-md));
+  top: 50vh;
+  transform: translateY(-50%);
   align-self: flex-start;
 }
 
@@ -833,14 +834,17 @@ h5 {
   padding: var(--space-xl) 0;
 }
 
-/* Work Card — inspired by Studio Llama's project cards */
+/* Work Card — horizontal layout inspired by Studio Llama */
 .work-card {
+  display: flex;
+  flex-direction: row;
   margin-bottom: var(--space-lg);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--c-white);
   transition: transform var(--dur-normal) var(--ease-out),
     box-shadow var(--dur-normal) var(--ease-out);
+  min-height: 280px;
 }
 
 .work-card:hover {
@@ -849,9 +853,11 @@ h5 {
 }
 
 .work-card__color {
+  flex: 0 0 200px;
   padding: var(--space-lg) var(--space-md);
   display: flex;
   align-items: flex-end;
+  justify-content: flex-start;
 }
 
 .work-card__color--camel {
@@ -881,7 +887,11 @@ h5 {
 }
 
 .work-card__body {
-  padding: var(--space-md);
+  flex: 1;
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .work-card__title {
@@ -913,6 +923,22 @@ h5 {
   color: var(--c-text-light);
   letter-spacing: 0.02em;
   text-transform: lowercase;
+}
+
+@media (max-width: 768px) {
+  .work-card {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .work-card__color {
+    flex: none;
+    padding: var(--space-md) var(--space-md);
+  }
+
+  .work-card__body {
+    padding: var(--space-md);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
