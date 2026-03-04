@@ -303,11 +303,11 @@ function initTiltCards() {
       }
     }
 
-    // Mouse handlers
-    card.addEventListener('mousemove', (e) => {
+    // Touch and Mouse shared handler
+    function handlePointerMove(clientX, clientY) {
       const rect = card.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
+      const mouseX = clientX - rect.left;
+      const mouseY = clientY - rect.top;
 
       // Normalized position (-0.5 to 0.5)
       state.targetX = mouseX / rect.width - 0.5;
@@ -318,15 +318,36 @@ function initTiltCards() {
       state.spotTargetY = mouseY;
 
       state.isHovering = true;
+      card.classList.add('is-active');
       startAnimation();
-    });
+    }
 
-    card.addEventListener('mouseleave', () => {
+    function handlePointerLeave() {
       state.targetX = 0;
       state.targetY = 0;
       state.isHovering = false;
+      card.classList.remove('is-active');
       startAnimation();
-    });
+    }
+
+    // Mouse handlers
+    card.addEventListener('mousemove', (e) => handlePointerMove(e.clientX, e.clientY));
+    card.addEventListener('mouseleave', handlePointerLeave);
+
+    // Touch handlers
+    card.addEventListener('touchstart', (e) => {
+      // Prevent scrolling while interacting with the card if needed
+      // e.preventDefault(); 
+      const touch = e.touches[0];
+      handlePointerMove(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    card.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      handlePointerMove(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    card.addEventListener('touchend', handlePointerLeave);
   });
 }
 
