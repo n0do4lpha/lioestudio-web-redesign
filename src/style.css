@@ -659,7 +659,7 @@ h5 {
   }
 
   .accordion__item.is-active .accordion__label {
-    bottom: 54px;
+    bottom: 90px;
     left: 20px;
     font-size: 1.15rem;
   }
