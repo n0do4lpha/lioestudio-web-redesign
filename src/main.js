@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   assignStaggerDelays();
   initTiltCards();
   initWorkSwiper();
+  initServiceAccordion();
 });
 
 /* ═══════════════════════════════════════════
@@ -457,4 +458,36 @@ function initWorkSwiper() {
   });
 
   updatePositions();
+}
+
+
+/* ═══════════════════════════════════════════
+   SERVICE ACCORDION — Interactive image panels
+   ═══════════════════════════════════════════ */
+function initServiceAccordion() {
+  const container = document.getElementById('serviceAccordion');
+  if (!container) return;
+
+  const items = container.querySelectorAll('.accordion__item');
+
+  // Load background images from data-image attributes
+  items.forEach((item) => {
+    const imgUrl = item.dataset.image;
+    if (imgUrl) {
+      item.style.backgroundImage = `url(${imgUrl})`;
+    }
+  });
+
+  // Handle hover (desktop) and click/tap (mobile)
+  items.forEach((item) => {
+    item.addEventListener('mouseenter', () => {
+      items.forEach((el) => el.classList.remove('is-active'));
+      item.classList.add('is-active');
+    });
+
+    item.addEventListener('click', () => {
+      items.forEach((el) => el.classList.remove('is-active'));
+      item.classList.add('is-active');
+    });
+  });
 }

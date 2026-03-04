@@ -528,6 +528,142 @@ h5 {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   SERVICES ACCORDION — Interactive image panels
+   ═══════════════════════════════════════════════════════════════ */
+.services-accordion {
+  margin-top: var(--space-xl);
+}
+
+.accordion__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 450px;
+  overflow: hidden;
+}
+
+.accordion__item {
+  position: relative;
+  height: 100%;
+  min-width: 60px;
+  width: 60px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--c-bg-dark);
+  flex-shrink: 0;
+}
+
+.accordion__item.is-active {
+  width: 400px;
+  flex-shrink: 1;
+}
+
+/* Dark overlay */
+.accordion__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  transition: background 0.4s var(--ease-out);
+}
+
+.accordion__item.is-active .accordion__overlay {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Label */
+.accordion__label {
+  position: absolute;
+  color: var(--c-white);
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+
+/* Active: horizontal, bottom-left */
+.accordion__item.is-active .accordion__label {
+  bottom: 54px;
+  left: 24px;
+  transform: rotate(0deg);
+  font-size: 1.3rem;
+}
+
+/* Inactive: rotated vertical, centered */
+.accordion__item:not(.is-active) .accordion__label {
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%) rotate(-90deg);
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+/* Description — only visible on active */
+.accordion__desc {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  right: 24px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s 0.2s var(--ease-out),
+    transform 0.4s 0.2s var(--ease-out);
+}
+
+.accordion__item.is-active .accordion__desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Mobile: stack vertically ─── */
+@media (max-width: 768px) {
+  .accordion__row {
+    flex-direction: column;
+    height: auto;
+    gap: 8px;
+  }
+
+  .accordion__item {
+    width: 100% !important;
+    min-width: unset;
+    height: 70px;
+    transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .accordion__item.is-active {
+    height: 280px;
+  }
+
+  .accordion__item:not(.is-active) .accordion__label {
+    bottom: auto;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  .accordion__item.is-active .accordion__label {
+    bottom: 54px;
+    left: 20px;
+    font-size: 1.15rem;
+  }
+
+  .accordion__desc {
+    left: 20px;
+    right: 20px;
+    bottom: 16px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
    WORK / PROJECTS (almond section)
    ═══════════════════════════════════════════════════════════════ */
 .section--almond {
