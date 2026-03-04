@@ -696,7 +696,7 @@ h5 {
 .services__tagline {
   text-align: center;
   max-width: 600px;
-  margin: 0 auto var(--space-xl);
+  margin: 0 auto var(--space-md);
   color: var(--c-text-light);
   font-size: var(--fs-body);
   line-height: 1.7;
