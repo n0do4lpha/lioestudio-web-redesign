@@ -1155,7 +1155,8 @@ h5 {
 .vertical-stack {
   position: relative;
   display: flex;
-  height: 600px;
+  height: 85vh;
+  min-height: 700px;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -1167,30 +1168,30 @@ h5 {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 600px;
-  height: 600px;
+  width: 800px;
+  height: 800px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.02);
-  filter: blur(40px);
+  filter: blur(50px);
   pointer-events: none;
 }
 
 .vertical-stack-cards {
   position: relative;
   display: flex;
-  height: 500px;
-  width: 320px;
+  height: 650px;
+  width: 420px;
   align-items: center;
   justify-content: center;
-  perspective: 1200px;
+  perspective: 1400px;
 }
 
 .vertical-stack-card {
   position: absolute;
-  width: 280px;
-  height: 420px;
-  border-radius: 24px;
+  width: 360px;
+  height: 540px;
+  border-radius: 28px;
   background-color: var(--c-bg-alt);
   overflow: hidden;
   cursor: grab;
@@ -1388,11 +1389,12 @@ h5 {
 
 @media (max-width: 768px) {
   .vertical-stack {
-    height: 500px;
+    height: 600px;
+    min-height: auto;
   }
 
   .vertical-stack-cards {
-    transform: scale(0.85);
+    transform: scale(0.75);
   }
 }
 

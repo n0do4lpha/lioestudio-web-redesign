@@ -615,15 +615,15 @@ function initTeamStack() {
     if (diff === 0) {
       return { y: 0, scale: 1, opacity: 1, zIndex: 5, rotateX: 0 };
     } else if (diff === -1) {
-      return { y: -160, scale: 0.82, opacity: 0.6, zIndex: 4, rotateX: 8 };
+      return { y: -210, scale: 0.82, opacity: 0.6, zIndex: 4, rotateX: 8 };
     } else if (diff === -2) {
-      return { y: -280, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: 15 };
+      return { y: -380, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: 15 };
     } else if (diff === 1) {
-      return { y: 160, scale: 0.82, opacity: 0.6, zIndex: 4, rotateX: -8 };
+      return { y: 210, scale: 0.82, opacity: 0.6, zIndex: 4, rotateX: -8 };
     } else if (diff === 2) {
-      return { y: 280, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: -15 };
+      return { y: 380, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: -15 };
     } else {
-      return { y: diff > 0 ? 400 : -400, scale: 0.6, opacity: 0, zIndex: 0, rotateX: diff > 0 ? -20 : 20 };
+      return { y: diff > 0 ? 500 : -500, scale: 0.6, opacity: 0, zIndex: 0, rotateX: diff > 0 ? -20 : 20 };
     }
   }
 
@@ -634,7 +634,7 @@ function initTeamStack() {
       card.style.opacity = style.opacity;
       card.style.zIndex = style.zIndex;
 
-      if (Math.abs(style.y) >= 400 || style.opacity === 0) {
+      if (Math.abs(style.y) >= 500 || style.opacity === 0) {
         card.style.pointerEvents = 'none';
       } else {
         card.style.pointerEvents = index === currentIndex ? 'auto' : 'none';
