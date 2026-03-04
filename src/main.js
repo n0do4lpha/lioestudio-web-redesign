@@ -605,7 +605,10 @@ function initTeamStack() {
 
   let isDragging = false;
   let startY = 0;
+  let startX = 0;
   let currentY = 0;
+  let currentX = 0;
+  let isSwipingVertically = false;
 
   function getCardStyle(index) {
     let diff = index - currentIndex;
@@ -678,6 +681,8 @@ function initTeamStack() {
   container.addEventListener('pointerdown', (e) => {
     isDragging = true;
     startY = e.clientY;
+    startX = e.clientX;
+    isSwipingVertically = false;
     container.style.cursor = 'grabbing';
     e.preventDefault(); // Prevent text selection/native drag on img
   });
@@ -685,6 +690,7 @@ function initTeamStack() {
   window.addEventListener('pointermove', (e) => {
     if (!isDragging) return;
     currentY = e.clientY;
+    currentX = e.clientX;
   });
 
   window.addEventListener('pointerup', (e) => {
@@ -692,9 +698,12 @@ function initTeamStack() {
     isDragging = false;
     container.style.cursor = '';
 
-    const diff = currentY - startY;
-    if (Math.abs(diff) > 50) {
-      if (diff < 0) navigate(1); // drag up -> next
+    const diffY = currentY - startY;
+    const diffX = currentX - startX;
+
+    // Only trigger if vertical diff is dominant and significant
+    if (Math.abs(diffY) > 50 && Math.abs(diffY) > Math.abs(diffX)) {
+      if (diffY < 0) navigate(1); // drag up -> next
       else navigate(-1); // drag down -> prev
     }
   });
@@ -703,16 +712,22 @@ function initTeamStack() {
   container.addEventListener('touchstart', (e) => {
     isDragging = true;
     startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
+    isSwipingVertically = false;
   }, { passive: true });
 
   window.addEventListener('touchmove', (e) => {
     if (!isDragging) return;
     currentY = e.touches[0].clientY;
+    currentX = e.touches[0].clientX;
 
-    // Prevent default scroll if interacting vertically on the stack area
-    const diff = Math.abs(currentY - startY);
-    if (diff > 5) {
-      e.preventDefault();
+    const diffY = Math.abs(currentY - startY);
+    const diffX = Math.abs(currentX - startX);
+
+    // If swipe is primarily vertical, lock scroll and handle cards
+    if (diffY > 5 && diffY > diffX) {
+      isSwipingVertically = true;
+      if (e.cancelable) e.preventDefault();
     }
   }, { passive: false });
 
@@ -720,9 +735,11 @@ function initTeamStack() {
     if (!isDragging) return;
     isDragging = false;
 
-    const diff = currentY - startY;
-    if (Math.abs(diff) > 50) {
-      if (diff < 0) navigate(1); // drag up -> next
+    if (!isSwipingVertically) return;
+
+    const diffY = currentY - startY;
+    if (Math.abs(diffY) > 50) {
+      if (diffY < 0) navigate(1); // drag up -> next
       else navigate(-1); // drag down -> prev
     }
   });
