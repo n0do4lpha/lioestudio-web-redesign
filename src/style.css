@@ -1074,24 +1074,25 @@ h5 {
 .clients__track {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: 4rem;
   white-space: nowrap;
   animation: marquee 40s linear infinite;
   width: max-content;
+  padding-right: 4rem;
+  /* so the loop is seamless */
 }
 
-.clients__name {
-  font-size: clamp(0.85rem, 1.2vw, 1rem);
-  font-weight: 500;
-  color: var(--c-text-muted);
-  letter-spacing: 0.01em;
+.clients__img {
+  height: clamp(32px, 4vw, 56px);
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.6);
+  transition: filter 0.3s var(--ease-default);
   flex-shrink: 0;
 }
 
-.clients__dot {
-  color: var(--c-border);
-  font-size: 1.2rem;
-  flex-shrink: 0;
+.clients__img:hover {
+  filter: grayscale(0%) opacity(1);
 }
 
 @keyframes marquee {
